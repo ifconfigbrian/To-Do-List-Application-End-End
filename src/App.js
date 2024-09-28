@@ -35,27 +35,27 @@ const App = ()=>{
   }
   return(
     <Router>
-      <div className='app-container'>
-        <nav>
-          <ul>
-            <li><Link to="/tasks">All Tasks</Link></li>
-            <li><Link to="/tasks/add">Add Task</Link></li>
+      <div className='app-container p-4'>
+        <nav className='mb-4'>
+          <ul className='flex space-x-4'>
+            <li><Link className='text-blue-500 hover:underline' to="/tasks">All Tasks</Link></li>
+            <li><Link className='text-blue-500 hover:underline' to="/tasks/add">Add Task</Link></li>
           </ul>
         </nav>
         <Routes>
-          <Route path='/'element={
+          <Route path='/tasks'element={
             <>
-            <h1>Task Manager</h1>
+            <h1 className='text-2xl font-bold mb-4'>Task Manager</h1>
             <TaskList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask}/>
             </>
           }/>
-          <Route path='/add'element={
+          <Route path='/tasks/add'element={
             <>
             <h1>Add new Task</h1>
             <TaskForm onAdd={addTask}/>
             </>
           }/>
-          <Route path='/task/:id'element={<TaskDetail tasks={tasks} onToggle={toggleTask} onDelete={deleteTask}/>}/>
+          <Route path='/tasks/task/:id'element={<TaskDetail tasks={tasks} onToggle={toggleTask} onDelete={deleteTask}/>}/>
         </Routes>
       </div>
     </Router>

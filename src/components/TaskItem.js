@@ -15,14 +15,14 @@
 
  const TaskItem = ({task,onToggle,onDelete}) => {
     return (
-        <li>
+        <li className='flex justify-between items-center py-2'>
             <span
-                style={{textDecoration: task.completed ? 'line-through' : 'none'}}
+                 className={`cursor-pointer ${task.completed ? 'line-through text-gray-500' : 'text-black'}`}
                 onClick={() => onToggle(task.id)} >
                     {task.name}
             </span>
             {/* button to delete the task */}
-            <button onClick={() => onDelete(task.id)}>Delete</button>
+            <button className='text-red-500 hover:underline' onClick={() => onDelete(task.id)}>Delete</button>
         </li>
     )
  }
