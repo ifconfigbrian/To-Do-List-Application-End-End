@@ -5,19 +5,17 @@
  * 
  * Props:
  * - tasks: Array of task objects.
- * - onToggle: Function to toggle task completion.
- * - onDelete: Function to delete a task.
  */
 
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({tasks,onToggle,onDelete}) =>{
+const TaskList = ({tasks}) =>{
     return (
         <ul>
             {/* map over tasks array and render an item for each task */}
             {tasks.map(task => (
-                <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
+                <TaskItem key={task.id} task={task}/>
             ))}
         </ul>
     )

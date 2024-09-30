@@ -10,23 +10,31 @@
 import React,{useState} from "react";
 
 const TaskForm = ({onAdd}) => {
-    const [taskName,setTaskName] = useState('');//track new task
+    const [taskText,setTaskText] = useState('');//state for task text
+    const [taskDate,setTaskDate] = useState('');//holds date input for the task
 
     //form submission function
     const handleSubmit = (e) =>{
         e.preventDefault();
-        if (!taskName.trim()) return;//prevents adding empty tasks
-
-        onAdd({name:taskName,completed:false})
-        setTaskName('')
+        onAdd({text:taskText,date:taskDate})
+        if (!taskText.trim()) return;//prevents adding empty tasks
+        setTaskText('')
+        setTaskDate('')
     }
     return(
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={taskName} onChange={(e) => setTaskName(e.target.value)}//update taskname on input change
-            placeholder="Enter a new task!"
-            
-            />
-            <button type="submit">Add Task</button>
+        <form onSubmit={handleSubmit} className="bg-gray-800 rounded-xl p-6">
+            <div className="mb-4">
+                <label className="block text-white mb-1">Task:</label>
+                <input
+                type="text"
+                value={taskText}
+                onChange={(e)=>setTaskText(e.target.value)} required
+                className="w-full p-2 rounded-md bg-gray-700 text-white"
+                placeholder="Enter Your Task"/>
+            </div>
+            <button type="submit" className="bg-purple-600 text-white py-2 rounded-full w-full">
+               Add Task
+            </button>
         </form>
     )
 }
