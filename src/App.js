@@ -77,7 +77,7 @@ const App = () => {
 							/>
 							<Route path="/tasks" element={<TaskList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />} />
 							<Route path="/task/:id" element={<TaskDetail tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />} />
-							<Route path="/tasks/add" element={<TaskForm onAddTask={addTask} />} />
+							<Route path="/tasks/add" element={<TaskForm onAdd={addTask} />} />
 						</Routes>
 					</div>
 				</div>

@@ -10,12 +10,12 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({tasks}) =>{
+const TaskList = ({tasks,onToggle,onDelete}) =>{
     return (
         <ul>
             {/* map over tasks array and render an item for each task */}
             {tasks.map(task => (
-                <TaskItem key={task.id} task={task}/>
+                <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete}/>
             ))}
         </ul>
     )

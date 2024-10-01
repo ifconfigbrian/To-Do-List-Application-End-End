@@ -19,8 +19,9 @@ const TaskForm = ({onAdd}) => {
         if (!taskText.trim()) return;//prevents adding empty tasks
 
      const newTask ={
-        text:taskText,
-        date:taskDate,
+        name:taskText,
+        date:taskDate || 'No Due Date',
+        completed:false,//default completion status
      }
 
      onAdd(newTask)

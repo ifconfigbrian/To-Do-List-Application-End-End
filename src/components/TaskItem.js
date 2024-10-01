@@ -17,10 +17,12 @@
     return (
         <li className='flex justify-between items-center py-2'>
             <span
-                 className={`cursor-pointer ${task.completed ? 'line-through text-gray-500' : 'text-black'}`}
+                 className={`cursor-pointer ${task.completed ? 'line-through text-gray-300' : 'text-gray-200'}`}
                 onClick={() => onToggle(task.id)} >
                     {task.name}
             </span>
+            {/* display the date */}
+            <p className='text-gray-400'>{task.date}</p>
             {/* button to delete the task */}
             <button className='text-red-500 hover:underline' onClick={() => onDelete(task.id)}>Delete</button>
         </li>
