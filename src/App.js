@@ -1,45 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import TaskDetail from "./components/TaskDetail";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTasks,addTask,toggleTask,deleteTask } from "./actions/taskActions";
 
 const App = () => {
 	const dispatch = useDispatch(); // Initialize dispatch for Redux
 
-	const [tasks, setTasks] = useState([]); // Local state for tasks
+	const tasks = useSelector((state)=> state.tasks.tasks) //get tasks from redux state
 
+	// fetch tasks on component mount from redux store
 	useEffect(() => {
-		try {
-			// Load tasks from local storage
-			const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-			setTasks(storedTasks);
-		} catch (error) {
-			console.error("Unable to load tasks", error);
-			setTasks([]); // Set to empty array on error
-		}
-	}, []);
+	  dispatch(fetchTasks())
+	}, [dispatch]); 
 
-	useEffect(() => {
-		// Save tasks to local storage whenever they change
-		localStorage.setItem("tasks", JSON.stringify(tasks));
-	}, [tasks]);
-
-	const addTask = newTask => {
+	const handleAddTask = (newTask) => {
 		// Function to add a new task
-		setTasks([...tasks, { ...newTask, id: uuidv4() }]);
+		const taskWithId = {...newTask,id:uuidv4()}
+		dispatch(addTask(taskWithId)) //update redux store
 	};
 
-	const toggleTask = id => {
+	const handleToggleTask = (id) => {
 		// Function to toggle a task's completion status
-		setTasks(tasks.map(task => (task.id === id ? { ...task, completed: !task.completed } : task)));
+		dispatch(toggleTask(id))
+
 	};
 
-	const deleteTask = id => {
+	const handleDeleteTask = (id) => {
 		// Function to delete a task
-		setTasks(tasks.filter(task => task.id !== id));
+		dispatch(deleteTask(id))
+
 	};
 
 	return (
@@ -83,9 +76,9 @@ const App = () => {
 									</div>
 					}
 					/>
-		<Route path="/tasks" element={<TaskList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />} />
-		<Route path="/task/:id" element={<TaskDetail tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />} />
-	    <Route path="/tasks/add" element={<TaskForm onAdd={addTask} />} />
+		<Route path="/tasks" element={<TaskList tasks={tasks} onToggle={handleToggleTask} onDelete={handleDeleteTask} />} />
+		<Route path="/task/:id" element={<TaskDetail tasks={tasks} onToggle={handleToggleTask} onDelete={handleDeleteTask} />} />
+	    <Route path="/tasks/add" element={<TaskForm onAdd={handleAddTask} />} />
 		</Routes>
 		</div>
 		</div>

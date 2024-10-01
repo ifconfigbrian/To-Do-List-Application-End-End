@@ -12,21 +12,34 @@
  */
 
  import React from 'react';
+ import PropTypes from 'prop-types'
 
  const TaskItem = ({task,onToggle,onDelete}) => {
+    const{id,name,completed,date} = task
     return (
         <li className='flex justify-between items-center py-2'>
             <span
-                 className={`cursor-pointer ${task.completed ? 'line-through text-gray-300' : 'text-gray-200'}`}
-                onClick={() => onToggle(task.id)} >
-                    {task.name}
+                 className={`cursor-pointer ${completed ? 'line-through text-gray-300' : 'text-gray-200'}`}
+                onClick={() => onToggle(id)} >
+                    {name}
             </span>
             {/* display the date */}
-            <p className='text-gray-400'>{task.date}</p>
+            <p className='text-gray-400'>{date}</p>
             {/* button to delete the task */}
-            <button className='text-red-500 hover:underline' onClick={() => onDelete(task.id)}>Delete</button>
+            <button className='text-red-500 hover:underline' onClick={() => onDelete(id)}>Delete</button>
         </li>
     )
- }
+}
+    TaskItem.propTypes = {
+        task: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+            date: PropTypes.string, // Optional date property
+        }).isRequired,
+        onToggle: PropTypes.func.isRequired,
+        onDelete: PropTypes.func.isRequired,
+    }
+ 
 
  export default TaskItem;
