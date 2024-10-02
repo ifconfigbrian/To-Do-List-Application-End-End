@@ -6,6 +6,8 @@ import TaskDetail from "./components/TaskDetail";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks,addTask,toggleTask,deleteTask } from "./actions/taskActions";
+import NotificationList from "./components/NotificationList";
+import { addNotification } from "./actions/notificationActions";
 
 const App = () => {
 	const dispatch = useDispatch(); // Initialize dispatch for Redux
@@ -25,19 +27,27 @@ const App = () => {
 
 	const handleToggleTask = (id) => {
 		// Function to toggle a task's completion status
+		const task = tasks.find(task => task.id === id)
 		dispatch(toggleTask(id))
+		if (task.completed) {
+			dispatch(addNotification(` "${task.name}" marked as not completed!`, 'info')); // Notify uncompleted
+		} else {
+			dispatch(addNotification(`"${task.name}" marked as completed!`, 'info')); // Notify completed
+		}
 
 	};
 
 	const handleDeleteTask = (id) => {
 		// Function to delete a task
 		dispatch(deleteTask(id))
+		dispatch(addNotification("Task deleted successfully!", 'success'))
 
 	};
 
 	return (
 	<Router>
 		<div className="app-container bg-black min-h-screen text-white">
+			<NotificationList/>
 		 <div className="max-w-full sm:max-w-lg mx-auto p-4">
 		  <div className="bg-gray-900 rounded-3xl p-6 overflow-y-auto min-h-screen">
 			<nav className="mb-6">

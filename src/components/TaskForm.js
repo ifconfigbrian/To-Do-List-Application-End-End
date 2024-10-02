@@ -8,15 +8,21 @@
  */
 
 import React,{useState} from "react";
+import { useDispatch } from "react-redux";
+import { addNotification } from "../actions/notificationActions";
 
 const TaskForm = ({onAdd}) => {
     const [taskText,setTaskText] = useState('');//state for task text
     const [taskDate,setTaskDate] = useState('');//holds date input for the task
+    const dispatch = useDispatch()
 
     //form submission function
     const handleSubmit = (e) =>{
         e.preventDefault();
-        if (!taskText.trim()) return;//prevents adding empty tasks
+        if (!taskText.trim()){
+         dispatch(addNotification('Task description cannot be empty!!','error'))
+         return
+        }
 
      const newTask ={
         name:taskText,
@@ -25,6 +31,7 @@ const TaskForm = ({onAdd}) => {
      }
 
      onAdd(newTask)
+     dispatch(addNotification('Task Added Successfully!!','success'))
      setTaskText('')
      setTaskDate('')
 
